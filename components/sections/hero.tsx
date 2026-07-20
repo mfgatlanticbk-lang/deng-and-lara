@@ -249,7 +249,7 @@ export function Hero({ visible = true }: HeroProps) {
               </p>
             </div>
 
-            <p
+            {/* <p
               className={`${cinzel.className} mx-auto max-w-[18rem] font-medium uppercase leading-relaxed tracking-[0.18em] min-[400px]:tracking-[0.22em] sm:max-w-xs sm:tracking-[0.26em]`}
               style={{
                 fontSize: "clamp(0.58rem, 1.45vw, 0.72rem)",
@@ -257,7 +257,7 @@ export function Hero({ visible = true }: HeroProps) {
               }}
             >
               {siteConfig.hero.inviteLine}
-            </p>
+            </p> */}
           </div>
 
           <div className={`mt-6 sm:mt-7 ${vis(4)}`}>
