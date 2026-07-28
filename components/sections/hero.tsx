@@ -1,13 +1,10 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import Image from "next/image"
+import { useEffect, useState } from "react"
 import localFont from "next/font/local"
 import { Cinzel } from "next/font/google"
-import { useSiteConfig } from "@/hooks/use-site-config"
 import { sectionType } from "@/lib/section-typography"
 import { SectionCornerDecorations } from "@/components/section-corner-decorations"
-import { parseWeddingDate } from "@/lib/wedding-date"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -25,6 +22,14 @@ const aboveTheBeyond = localFont({
   display: "swap",
   variable: "--font-above-beyond",
 })
+
+const HERO_DATE = {
+  month: "DECEMBER",
+  dayOfWeek: "SUNDAY",
+  dayNumber: "13",
+  year: "2026",
+  time: "3pm",
+}
 
 function OrnamentalDivider({ compact = false }: { compact?: boolean }) {
   return (
@@ -53,11 +58,7 @@ interface HeroProps {
 }
 
 export function Hero({ visible = true }: HeroProps) {
-  const siteConfig = useSiteConfig()
   const [phase, setPhase] = useState(0)
-
-  const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
-  const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
 
   useEffect(() => {
     if (!visible) {
@@ -68,9 +69,12 @@ export function Hero({ visible = true }: HeroProps) {
     const timers = [
       setTimeout(() => setPhase(1), 100),
       setTimeout(() => setPhase(2), 380),
-      setTimeout(() => setPhase(3), 640),
+      setTimeout(() => setPhase(3), 620),
       setTimeout(() => setPhase(4), 860),
-      setTimeout(() => setPhase(5), 1060),
+      setTimeout(() => setPhase(5), 1080),
+      setTimeout(() => setPhase(6), 1280),
+      setTimeout(() => setPhase(7), 1480),
+      setTimeout(() => setPhase(8), 1680),
     ]
     return () => timers.forEach(clearTimeout)
   }, [visible])
@@ -79,16 +83,6 @@ export function Hero({ visible = true }: HeroProps) {
     phase >= minPhase
       ? "opacity-100 translate-y-0 transition-all duration-700 ease-out"
       : "opacity-0 translate-y-5 transition-all duration-700 ease-out"
-
-  const parsedDate = useMemo(
-    () => parseWeddingDate(siteConfig.ceremony.date ?? siteConfig.wedding.date),
-    [siteConfig.ceremony.date, siteConfig.wedding.date],
-  )
-  const ceremonyMonth = parsedDate.month
-  const ceremonyDayNumber = parsedDate.day
-  const ceremonyYear = parsedDate.year
-  const ceremonyDay = (siteConfig.ceremony.day ?? parsedDate.dayOfWeek).toUpperCase()
-  const ceremonyTime = siteConfig.ceremony.time ?? siteConfig.wedding.time
 
   const dateLabelStyle = {
     fontFamily: "var(--font-cinzel), Cinzel, serif",
@@ -137,100 +131,48 @@ export function Hero({ visible = true }: HeroProps) {
             }}
           />
 
-          <div
-            className={`flex justify-center mt-8 sm:mt-10 mb-8 sm:mb-10 ${
-              phase >= 1
-                ? "opacity-100 scale-100 transition-all duration-700 ease-out"
-                : "opacity-0 scale-95 transition-all duration-700 ease-out"
-            }`}
-          >
-            <Image
-              src={siteConfig.couple.monogram}
-              alt={`${brideName} & ${groomName} monogram`}
-              width={160}
-              height={160}
-              className="h-16 w-16 sm:h-20 sm:w-20 object-contain object-center"
-              style={{
-                filter:
-                  "brightness(0) sepia(1) saturate(0.15) hue-rotate(10deg) opacity(0.72)",
-              }}
-              priority
-            />
+          <div className={`mt-8 sm:mt-10 mb-5 sm:mb-6 ${vis(2)}`}>
+            {/* <OrnamentalDivider compact /> */}
           </div>
 
-          <div className={`mt-4 mb-4 sm:mt-5 sm:mb-5 ${vis(2)}`}>
-            <OrnamentalDivider compact />
-          </div>
-
-          <div className={`${vis(2)} space-y-0.5`}>
+          <div className={`${vis(2)} space-y-5 sm:space-y-6`}>
             <p
-              className={`${theSeasons.className} uppercase tracking-[0.10em] min-[400px]:tracking-[0.12em] sm:tracking-[0.14em]`}
+              className={`${cinzel.className} font-semibold uppercase tracking-[0.26em] sm:tracking-[0.30em]`}
               style={{
-                fontSize: "clamp(1.35rem, 4.5vw, 1.85rem)",
-                color: "var(--color-welcome-navy)",
-                lineHeight: 1.1,
-              }}
-            >
-              {siteConfig.hero.eventTitle}
-            </p>
-            <p
-              className={`${aboveTheBeyond.className} mx-auto w-fit max-w-full px-1 leading-[0.9]`}
-              style={{
-                marginTop: "clamp(-0.35rem, -1vw, -0.15rem)",
-                fontSize: "clamp(0.95rem, 2.8vw, 1.25rem)",
+                fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
                 color: "var(--color-welcome-green)",
-                textShadow:
-                  "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
               }}
             >
-              {siteConfig.hero.eventSubtitle}
+              — ALL IS GRACE —
+            </p>
+
+            <p
+              className={`${theSeasons.className} mx-auto max-w-[24rem] sm:max-w-md leading-[1.65] tracking-[0.02em]`}
+              style={{
+                fontSize: "clamp(1.05rem, 3vw, 1.2rem)",
+                color: "var(--color-welcome-text)",
+              }}
+            >
+              With Gods grace, unconditional love, forgiveness, faith, and unceasing prayers
+              stand the test of time, and our parents are the beautiful proof.
             </p>
           </div>
 
-          <div
-            role="img"
-            aria-label={`${brideName} and ${groomName}`}
-            className={`mt-6 sm:mt-7 w-full max-w-[min(90vw,18rem)] sm:max-w-xs mx-auto aspect-[528/473] ${vis(3)}`}
-            style={{
-              transitionDelay: "40ms",
-              backgroundColor: "var(--color-welcome-navy)",
-              WebkitMaskImage: "url(/Details/couplenames.png)",
-              maskImage: "url(/Details/couplenames.png)",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskPosition: "center",
-              maskPosition: "center",
-              filter:
-                "drop-shadow(0 2px 12px color-mix(in srgb, var(--color-motif-deep) 12%, transparent))",
-            }}
-          />
-
-          <div className={`mt-6 sm:mt-7 space-y-3 sm:space-y-3.5 ${vis(3)}`} style={{ transitionDelay: "80ms" }}>
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2">
-              <p
-                className={`${aboveTheBeyond.className} text-[1rem] leading-snug min-[400px]:text-[1.1rem] sm:text-[1.15rem]`}
-                style={{
-                  color: "var(--color-welcome-green)",
-                  textShadow:
-                    "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
-                }}
-              >
-                {siteConfig.hero.togetherWith}
-              </p>
+          <div className={`mt-8 sm:mt-9 space-y-4 sm:space-y-4.5 ${vis(3)}`}>
+            <div className="flex flex-col items-center gap-2 sm:gap-2.5">
               <p
                 className={`${theSeasons.className} leading-tight tracking-[0.06em] min-[400px]:tracking-[0.08em] sm:tracking-[0.10em]`}
                 style={{
-                  fontSize: "clamp(1.05rem, 3.2vw, 1.35rem)",
+                  fontSize: "clamp(1.25rem, 4vw, 1.65rem)",
                   color: "var(--color-welcome-navy)",
                 }}
               >
-                {siteConfig.hero.hosts.first}
+                Emanuel Dengabriel
               </p>
               <p
-                className={`${aboveTheBeyond.className} leading-none text-[0.95rem] min-[400px]:text-[1.05rem] sm:text-[1.15rem]`}
+                className={`${aboveTheBeyond.className} leading-none`}
                 style={{
+                  fontSize: "clamp(1.15rem, 3.4vw, 1.45rem)",
                   color: "var(--color-welcome-green)",
                   textShadow:
                     "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
@@ -241,26 +183,102 @@ export function Hero({ visible = true }: HeroProps) {
               <p
                 className={`${theSeasons.className} leading-tight tracking-[0.06em] min-[400px]:tracking-[0.08em] sm:tracking-[0.10em]`}
                 style={{
-                  fontSize: "clamp(1.05rem, 3.2vw, 1.35rem)",
+                  fontSize: "clamp(1.25rem, 4vw, 1.65rem)",
                   color: "var(--color-welcome-navy)",
                 }}
               >
-                {siteConfig.hero.hosts.second}
+                Imanuel Yoshua
               </p>
             </div>
 
-            {/* <p
-              className={`${cinzel.className} mx-auto max-w-[18rem] font-medium uppercase leading-relaxed tracking-[0.18em] min-[400px]:tracking-[0.22em] sm:max-w-xs sm:tracking-[0.26em]`}
+            <p
+              className={`${aboveTheBeyond.className} mx-auto w-fit max-w-full px-1 leading-snug`}
               style={{
-                fontSize: "clamp(0.58rem, 1.45vw, 0.72rem)",
-                color: "rgba(28, 28, 30, 0.52)",
+                fontSize: "clamp(0.95rem, 2.6vw, 1.15rem)",
+                color: "var(--color-welcome-green)",
+                textShadow:
+                  "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
               }}
             >
-              {siteConfig.hero.inviteLine}
-            </p> */}
+              invite you to celebrate 25 years of marriage
+            </p>
+
+            <p
+              className={`${aboveTheBeyond.className} leading-snug`}
+              style={{
+                fontSize: "clamp(1.1rem, 3.2vw, 1.4rem)",
+                color: "var(--color-welcome-green)",
+                textShadow:
+                  "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
+              }}
+            >
+              honoring
+            </p>
           </div>
 
           <div className={`mt-6 sm:mt-7 ${vis(4)}`}>
+            <h2
+              className="mx-auto w-full max-w-[min(92vw,36rem)] text-center"
+              aria-label="Deng and Lara"
+            >
+              <span
+                className={`${theSeasons.className} block uppercase`}
+                style={{
+                  fontSize: "clamp(3.5rem, 11.5vw, 6.5rem)",
+                  color: "var(--color-welcome-navy)",
+                  lineHeight: 1.12,
+                  letterSpacing: "0.06em",
+                  textShadow:
+                    "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 8px 28px color-mix(in srgb, var(--color-motif-deep) 6%, transparent)",
+                }}
+              >
+                Deng
+              </span>
+
+              <span
+                className={`${aboveTheBeyond.className} block`}
+                style={{
+                  fontSize: "clamp(1.35rem, 3.5vw, 2.1rem)",
+                  color: "var(--color-welcome-green)",
+                  lineHeight: 1.1,
+                  marginTop: "clamp(0.45rem, 2vw, 0.95rem)",
+                  marginBottom: "clamp(0.45rem, 2vw, 0.95rem)",
+                  textShadow:
+                    "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
+                }}
+              >
+                and
+              </span>
+
+              <span
+                className={`${theSeasons.className} block uppercase`}
+                style={{
+                  fontSize: "clamp(3.5rem, 11.5vw, 6.5rem)",
+                  color: "var(--color-welcome-navy)",
+                  lineHeight: 1.12,
+                  letterSpacing: "0.06em",
+                  textShadow:
+                    "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 8px 28px color-mix(in srgb, var(--color-motif-deep) 6%, transparent)",
+                }}
+              >
+                Lara
+              </span>
+            </h2>
+          </div>
+
+          <div className={`mt-7 sm:mt-8 ${vis(5)}`}>
+            <p
+              className={`${theSeasons.className} mx-auto max-w-[22rem] sm:max-w-sm leading-[1.6] tracking-[0.02em]`}
+              style={{
+                fontSize: "clamp(1.05rem, 3vw, 1.2rem)",
+                color: "var(--color-welcome-text)",
+              }}
+            >
+              Join us for an evening of love, laughter, and memories.
+            </p>
+          </div>
+
+          <div className={`mt-7 sm:mt-8 ${vis(6)}`}>
             <div className="mx-auto flex w-full max-w-[20rem] flex-col items-center gap-3 sm:max-w-sm sm:gap-3.5">
               <div
                 className="h-px w-full max-w-[10rem]"
@@ -279,7 +297,7 @@ export function Hero({ visible = true }: HeroProps) {
                   letterSpacing: "0.30em",
                 }}
               >
-                {ceremonyMonth}
+                {HERO_DATE.month}
               </p>
 
               <div className="flex w-full items-center justify-center" style={{ lineHeight: 1 }}>
@@ -290,7 +308,7 @@ export function Hero({ visible = true }: HeroProps) {
                     paddingRight: "clamp(0.6rem, 2vw, 1rem)",
                   }}
                 >
-                  {ceremonyDay}
+                  {HERO_DATE.dayOfWeek}
                 </p>
 
                 <div style={verticalRuleStyle} aria-hidden />
@@ -305,7 +323,7 @@ export function Hero({ visible = true }: HeroProps) {
                     lineHeight: 1,
                   }}
                 >
-                  {ceremonyDayNumber}
+                  {HERO_DATE.dayNumber}
                 </p>
 
                 <div style={verticalRuleStyle} aria-hidden />
@@ -318,7 +336,7 @@ export function Hero({ visible = true }: HeroProps) {
                     paddingLeft: "clamp(0.6rem, 2vw, 1rem)",
                   }}
                 >
-                  At {ceremonyTime}
+                  At {HERO_DATE.time}
                 </p>
               </div>
 
@@ -331,31 +349,36 @@ export function Hero({ visible = true }: HeroProps) {
                   letterSpacing: "0.30em",
                 }}
               >
-                {ceremonyYear}
+                {HERO_DATE.year}
               </p>
             </div>
           </div>
 
-          <div className={`mt-8 flex flex-col items-center gap-6 ${vis(5)}`}>
-            <div className="space-y-2">
-              <p
-                className={`${cinzel.className} ${sectionType.label} font-semibold uppercase tracking-[0.40em] sm:tracking-[0.44em]`}
-                style={{ color: "var(--color-welcome-green)" }}
-              >
-                Ceremony
-              </p>
-              <p
-                className={`${cinzel.className} ${sectionType.label} font-semibold uppercase tracking-[0.16em] sm:tracking-[0.20em] leading-relaxed`}
-                style={{ color: "var(--color-welcome-text)" }}
-              >
-                {siteConfig.ceremony.location}
-              </p>
-            </div>
+          <div className={`mt-7 sm:mt-8 flex flex-col items-center gap-5 ${vis(7)}`}>
+            <p
+              className={`${cinzel.className} font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em] leading-relaxed`}
+              style={{
+                color: "var(--color-welcome-text)",
+                fontSize: "clamp(0.72rem, 1.8vw, 0.85rem)",
+              }}
+            >
+              Venue details to follow
+            </p>
 
             <OrnamentalDivider compact />
+
+            <p
+              className={`${cinzel.className} font-medium uppercase tracking-[0.12em] sm:tracking-[0.16em]`}
+              style={{
+                color: "rgba(28, 28, 30, 0.52)",
+                fontSize: "clamp(0.68rem, 1.65vw, 0.8rem)",
+              }}
+            >
+              RSVP by September 12, 2026
+            </p>
           </div>
 
-          <div className={`mt-10 flex justify-center ${vis(5)}`}>
+          <div className={`mt-8 flex justify-center ${vis(8)}`}>
             <a
               href="#guest-list"
               className={`${cinzel.className} ${sectionType.label} group relative inline-flex items-center justify-center rounded-sm border px-12 py-3.5 font-semibold uppercase tracking-[0.24em] sm:tracking-[0.28em] transition-all duration-300 hover:-translate-y-0.5 focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
