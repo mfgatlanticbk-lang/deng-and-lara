@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState, useCallback, useEffect, type CSSProperties } from "react"
-import { Card, CardContent } from "@/components/ui/card"
+import { motion } from "motion/react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -10,6 +10,7 @@ import MessageWallDisplay from "./message-wall-display"
 import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
+import { SectionCornerDecorations } from "@/components/section-corner-decorations"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 
 const cinzel = Cinzel({
@@ -41,34 +42,12 @@ const dividerLineStyle = {
     "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-deep) 38%, transparent), transparent)",
 } as const
 
-const glassPanelStyle = {
-  background: "rgba(255, 255, 255, 0.24)",
-  borderWidth: "1px",
-  borderStyle: "solid" as const,
-  borderColor: "rgba(255, 255, 255, 0.38)",
+const cardContainerStyle = {
+  background: "var(--color-welcome-bg)",
+  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
   boxShadow:
-    "0 8px 32px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.55)",
+    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
 } as const
-
-const innerSurfaceStyle = {
-  background: "rgba(255, 255, 255, 0.14)",
-  borderColor: "rgba(255, 255, 255, 0.32)",
-} as const
-
-function GlassSurfaceLayers() {
-  return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/30 via-white/12 to-white/4"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-white/28"
-        aria-hidden
-      />
-    </>
-  )
-}
 
 interface Message {
   timestamp: string
@@ -211,7 +190,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
     }`
 
   return (
-    <div className="relative mx-auto w-full max-w-md px-3 sm:px-0">
+    <div className="relative mx-auto w-full max-w-md">
       <style>{`
         .message-form-input::placeholder,
         .message-form-textarea::placeholder {
@@ -220,16 +199,15 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
         }
       `}</style>
 
-      <Card
-        className={`relative w-full overflow-hidden rounded-xl border backdrop-blur-md transition-all duration-500 sm:rounded-2xl ${
+      <div
+        className={`relative w-full overflow-hidden rounded-md border transition-all duration-500 sm:rounded-lg ${
           isFocused ? "scale-[1.01]" : ""
         } ${isSubmitted ? "animate-bounce" : ""}`}
         style={{
-          ...innerSurfaceStyle,
-          boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.42)",
+          background: "var(--color-welcome-bg-soft)",
+          borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
         }}
       >
-
         {isSubmitted && (
           <div
             className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
@@ -244,7 +222,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
           </div>
         )}
 
-        <CardContent className="relative p-4 sm:p-5 md:p-6 lg:p-8">
+        <div className="relative p-4 sm:p-5 md:p-6">
           <div className="mb-4 text-center sm:mb-5 md:mb-6">
             <h3
               className={`${cinzel.className} ${sectionType.subheader} mb-1.5 font-semibold`}
@@ -350,8 +328,20 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="h-4 w-4 animate-spin sm:h-5 sm:w-5" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                   Sending...
                 </span>
@@ -360,8 +350,8 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
               )}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }
@@ -404,59 +394,85 @@ export function Messages() {
   return (
     <section
       id="messages"
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative z-10 overflow-visible bg-transparent py-6 sm:py-10 md:py-12 lg:py-16`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative px-3 py-5 sm:px-5 sm:py-7 md:px-6 md:py-9`}
     >
-      <div className="relative z-10 mx-auto max-w-4xl px-2 @container/messages sm:px-3 md:px-4 lg:px-6">
-        <div
-          className="relative overflow-visible rounded-xl border backdrop-blur-xl sm:rounded-2xl sm:backdrop-blur-2xl"
-          style={glassPanelStyle}
+      <div className="relative mx-auto flex w-full max-w-xl flex-col gap-5 sm:max-w-2xl sm:gap-6 md:gap-7">
+        {/* Header + form — countdown-style container */}
+        <motion.article
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.65, ease: [0.22, 0.61, 0.36, 1] }}
+          className="relative min-w-0 overflow-visible rounded-lg border px-4 pt-6 pb-10 @container/messages sm:rounded-xl sm:px-7 sm:pt-7 sm:pb-12 md:rounded-2xl md:px-8 md:pt-8 md:pb-14"
+          style={cardContainerStyle}
         >
-          <GlassSurfaceLayers />
+          <SectionCornerDecorations size="card" />
 
-          <div className="relative z-10 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10">
-            <div className="relative mb-6 text-center sm:mb-8 md:mb-10">
-              <div className="mx-auto mb-4 sm:mb-5">
-                <SectionDivider />
-              </div>
-              <MessagesTitle />
-              <p
-                className={`font-goudy-italic mx-auto mt-4 max-w-2xl px-2 sm:mt-5 md:mt-6 ${sectionType.textRelaxed}`}
-                style={{ color: palette.body }}
-              >
-                Share a short note, wish, or prayer for {coupleDisplayName}. Every message becomes
-                part of their story.
-              </p>
-              <div className="mt-3 flex items-center justify-center sm:mt-4">
-                <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
-              </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+            }}
+          />
+
+          <div className="relative mb-6 text-center sm:mb-8 md:mb-10">
+            <div className="mx-auto mb-4 sm:mb-5">
+              <SectionDivider />
             </div>
-
-            <div className="mb-6 flex justify-center sm:mb-8 md:mb-10">
-              <div className="relative w-full max-w-xl">
-                <MessageForm onMessageSent={fetchMessages} />
-              </div>
-            </div>
-
-            <div className="relative mx-auto max-w-3xl pb-2 sm:pb-3">
-              <div className="mb-4 text-center sm:mb-6 md:mb-8">
-                <h3
-                  className={`${cinzel.className} mb-1.5 font-semibold sm:mb-2 ${sectionType.subheader}`}
-                  style={{ color: palette.heading }}
-                >
-                  Messages from Loved Ones
-                </h3>
-                <p className={`font-goudy-italic ${sectionType.text}`} style={{ color: palette.body }}>
-                  Warm words from family and friends
-                </p>
-                <div className="mt-3 flex items-center justify-center sm:mt-4">
-                  <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
-                </div>
-              </div>
-
-              <MessageWallDisplay messages={messages} loading={loading} />
+            <MessagesTitle />
+            <p
+              className={`font-goudy-italic mx-auto mt-4 max-w-2xl px-2 sm:mt-5 md:mt-6 ${sectionType.textRelaxed}`}
+              style={{ color: palette.body }}
+            >
+              Share a short note, wish, or prayer for {coupleDisplayName}. Every message becomes
+              part of their story.
+            </p>
+            <div className="mt-3 flex items-center justify-center sm:mt-4">
+              <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
             </div>
           </div>
-        </div>
+
+          <div className="mb-2 flex justify-center">
+            <MessageForm onMessageSent={fetchMessages} />
+          </div>
+        </motion.article>
+
+        {/* Wall header — own independent container */}
+        <motion.article
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.65, ease: [0.22, 0.61, 0.36, 1], delay: 0.08 }}
+          className="relative min-w-0 overflow-visible rounded-lg border px-4 py-5 text-center sm:rounded-xl sm:px-7 sm:py-6 md:rounded-2xl md:px-8"
+          style={cardContainerStyle}
+        >
+          <SectionCornerDecorations size="card" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+            }}
+          />
+          <h3
+            className={`${cinzel.className} mb-1.5 font-semibold sm:mb-2 ${sectionType.subheader}`}
+            style={{ color: palette.heading }}
+          >
+            Messages from Loved Ones
+          </h3>
+          <p className={`font-goudy-italic ${sectionType.text}`} style={{ color: palette.body }}>
+            Warm words from family and friends
+          </p>
+          <div className="mt-3 flex items-center justify-center sm:mt-4">
+            <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />
+          </div>
+        </motion.article>
+
+        {/* Each message is its own independent card */}
+        <MessageWallDisplay messages={messages} loading={loading} />
       </div>
     </section>
   )

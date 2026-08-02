@@ -1,9 +1,10 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { useState, useEffect } from "react"
+import { motion } from "motion/react"
 import { Cinzel } from "next/font/google"
+import { Skeleton } from "@/components/ui/skeleton"
+import { SectionCornerDecorations } from "@/components/section-corner-decorations"
 import { sectionType } from "@/lib/section-typography"
 
 const cinzel = Cinzel({
@@ -18,18 +19,14 @@ const palette = {
   accent: "var(--color-welcome-green)",
 } as const
 
-const innerSurfaceStyle = {
-  background: "rgba(255, 255, 255, 0.14)",
-  borderWidth: "1px",
-  borderStyle: "solid" as const,
-  borderColor: "rgba(255, 255, 255, 0.32)",
-  boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.42)",
+const messageCardStyle = {
+  background: "var(--color-welcome-bg)",
+  borderColor: "color-mix(in srgb, var(--color-motif-deep) 14%, transparent)",
+  boxShadow:
+    "0 8px 28px color-mix(in srgb, var(--color-motif-deep) 7%, transparent), inset 0 1px 0 color-mix(in srgb, white 70%, transparent)",
 } as const
 
-const innerSurfaceHoverShadow =
-  "0 8px 24px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.42)"
-
-const skeletonBg = "color-mix(in srgb, var(--color-motif-deep) 18%, white)"
+const skeletonBg = "color-mix(in srgb, var(--color-motif-deep) 12%, var(--color-welcome-bg))"
 
 interface Message {
   timestamp: string
@@ -40,6 +37,34 @@ interface Message {
 interface MessageWallDisplayProps {
   messages: Message[]
   loading: boolean
+}
+
+function MessageCardShell({
+  children,
+  className = "",
+  style,
+}: {
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+}) {
+  return (
+    <article
+      className={`relative min-w-0 overflow-visible rounded-lg border px-4 py-4 sm:rounded-xl sm:px-5 sm:py-5 md:rounded-2xl md:px-6 md:py-6 ${className}`}
+      style={{ ...messageCardStyle, ...style }}
+    >
+      <SectionCornerDecorations size="card" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-4 top-0 h-px sm:inset-x-5"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+        }}
+      />
+      <div className="relative z-[1]">{children}</div>
+    </article>
+  )
 }
 
 export default function MessageWallDisplay({ messages, loading }: MessageWallDisplayProps) {
@@ -60,26 +85,26 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
 
   if (loading) {
     return (
-      <div className="space-y-2 sm:space-y-3 md:space-y-4">
+      <div className="space-y-3 sm:space-y-4 md:space-y-5">
         {[1, 2, 3].map((i) => (
-          <Card
-            key={i}
-            className="rounded-xl border backdrop-blur-md sm:rounded-2xl"
-            style={innerSurfaceStyle}
-          >
-            <CardContent className="p-3 sm:p-4 md:p-5">
-              <div className="mb-3 flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <Skeleton className="h-8 w-8 rounded-full sm:h-9 sm:w-9" style={{ backgroundColor: skeletonBg }} />
-                  <div className="space-y-2">
-                    <Skeleton className="h-3 w-24 sm:w-32" style={{ backgroundColor: skeletonBg }} />
-                    <Skeleton className="h-2.5 w-20" style={{ backgroundColor: skeletonBg }} />
-                  </div>
+          <MessageCardShell key={i}>
+            <div className="mb-3 flex items-start justify-between">
+              <div className="flex items-center space-x-3">
+                <Skeleton
+                  className="h-8 w-8 rounded-full sm:h-9 sm:w-9"
+                  style={{ backgroundColor: skeletonBg }}
+                />
+                <div className="space-y-2">
+                  <Skeleton className="h-3 w-24 sm:w-32" style={{ backgroundColor: skeletonBg }} />
+                  <Skeleton className="h-2.5 w-20" style={{ backgroundColor: skeletonBg }} />
                 </div>
               </div>
-              <Skeleton className="h-14 w-full rounded-lg sm:h-16" style={{ backgroundColor: skeletonBg }} />
-            </CardContent>
-          </Card>
+            </div>
+            <Skeleton
+              className="h-14 w-full rounded-lg sm:h-16"
+              style={{ backgroundColor: skeletonBg }}
+            />
+          </MessageCardShell>
         ))}
       </div>
     )
@@ -87,7 +112,7 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
 
   if (messages.length === 0) {
     return (
-      <div className="px-4 py-8 text-center sm:py-12 md:py-16">
+      <MessageCardShell className="text-center px-5 py-8 sm:py-10 md:py-12">
         <h3
           className={`${cinzel.className} mb-2 font-semibold sm:mb-3 ${sectionType.subheader}`}
           style={{ color: palette.heading }}
@@ -100,58 +125,52 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
         >
           Be the first to leave a note for the happy couple.
         </p>
-        <div className="flex justify-center">
-          <span
-            className={`font-goudy-italic ${sectionType.label} rounded-xl border px-4 py-2 backdrop-blur-md`}
-            style={{
-              color: palette.heading,
-              ...innerSurfaceStyle,
-            }}
-          >
-            Your message will appear here
-          </span>
-        </div>
-      </div>
+        <span
+          className={`font-goudy-italic inline-block ${sectionType.label} rounded-md border px-4 py-2`}
+          style={{
+            color: palette.heading,
+            background: "var(--color-welcome-bg-soft)",
+            borderColor: "color-mix(in srgb, var(--color-motif-deep) 10%, transparent)",
+          }}
+        >
+          Your message will appear here
+        </span>
+      </MessageCardShell>
     )
   }
 
   return (
-    <div className="space-y-2.5 sm:space-y-3 md:space-y-4">
+    <div className="space-y-3 sm:space-y-4 md:space-y-5">
       {visibleMessages.map((msg, index) => (
-        <Card
-          key={index}
-          className={`group relative transform overflow-hidden rounded-xl border backdrop-blur-md transition-all duration-500 hover:scale-[1.01] sm:rounded-2xl ${
-            isAnimating ? "translate-y-4 opacity-0" : "translate-y-0 opacity-100"
-          }`}
-          style={{
-            ...innerSurfaceStyle,
-            transitionDelay: `${index * 100}ms`,
-            animation: isAnimating ? "none" : "fadeInUp 0.6s ease-out forwards",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = innerSurfaceHoverShadow
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = innerSurfaceStyle.boxShadow as string
+        <motion.div
+          key={`${msg.timestamp}-${msg.name}-${index}`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={
+            isAnimating
+              ? { opacity: 0, y: 16 }
+              : { opacity: 1, y: 0 }
+          }
+          transition={{
+            duration: 0.55,
+            delay: index * 0.08,
+            ease: [0.22, 0.61, 0.36, 1],
           }}
         >
-          <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/30 via-white/12 to-white/4 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            aria-hidden
-          />
-          <div
-            className="absolute left-0 top-0 h-0.5 w-full origin-left scale-x-0 transform transition-transform duration-500 group-hover:scale-x-100"
-            style={{ backgroundColor: palette.accent }}
-          />
-
-          <CardContent className="relative p-3 sm:p-4 md:p-5">
+          <MessageCardShell className="group transition-shadow duration-300 hover:shadow-xl">
             <div className="mb-2 flex items-start justify-between sm:mb-3">
               <div className="flex min-w-0 flex-1 items-center space-x-2 sm:space-x-3">
                 <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-md ring-2 ring-white/50 transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9 md:h-10 md:w-10"
-                  style={{ backgroundColor: palette.accent }}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9 md:h-10 md:w-10"
+                  style={{
+                    backgroundColor: palette.accent,
+                    boxShadow:
+                      "0 4px 12px color-mix(in srgb, var(--color-motif-deep) 18%, transparent)",
+                  }}
                 >
-                  <span className={`${cinzel.className} ${sectionType.label} font-semibold text-white`}>
+                  <span
+                    className={`${cinzel.className} ${sectionType.label} font-semibold`}
+                    style={{ color: "var(--color-welcome-bg)" }}
+                  >
                     {msg.name
                       .split(" ")
                       .map((n) => n[0])
@@ -180,7 +199,7 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
               </div>
             </div>
 
-            <div className="relative py-1 pl-5 pr-2 sm:py-2 sm:pl-6 sm:pr-4">
+            <div className="relative py-1 pl-5 pr-1 sm:py-2 sm:pl-6">
               <span
                 className="font-goudy-italic absolute left-0 top-0 select-none text-2xl leading-none sm:text-3xl"
                 style={{ color: palette.accent, opacity: 0.45 }}
@@ -194,22 +213,9 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
                 {msg.message}
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </MessageCardShell>
+        </motion.div>
       ))}
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   )
 }

@@ -71,35 +71,9 @@ const FOOTER_QUOTES = [
   "Thank you for your love, prayers, and support. We can't wait to celebrate this joyful day together!",
 ] as const
 
-const toTitleCase = (str: string) =>
-  str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-
-function FooterCoupleNames({ groom, bride }: { groom: string; bride: string }) {
-  return (
-    <h2
-      className={`${cinzel.className} mx-auto whitespace-nowrap text-center ${sectionType.subheader} font-semibold tracking-[0.12em] sm:tracking-[0.16em] md:tracking-[0.18em]`}
-      style={{ color: "var(--color-welcome-navy)" }}
-    >
-      {groom}
-      <span
-        className={`${aboveTheBeyond.className} mx-2 inline-block normal-case tracking-normal sm:mx-2.5`}
-        style={{
-          fontSize: "1.35em",
-          color: "var(--color-welcome-green)",
-          verticalAlign: "middle",
-        }}
-        aria-hidden
-      >
-        &
-      </span>
-      {bride}
-    </h2>
-  )
-}
+const LONGEST_FOOTER_QUOTE = FOOTER_QUOTES.reduce((longest, quote) =>
+  quote.length > longest.length ? quote : longest,
+)
 
 function FooterCard({
   children,
@@ -149,11 +123,6 @@ export function Footer() {
   const year = new Date().getFullYear()
   const ceremonyDate = siteConfig.ceremony.date
   const ceremonyTime = siteConfig.ceremony.time
-  const receptionTime = siteConfig.reception.time
-  const ceremonyVenue = siteConfig.ceremony.location
-  const receptionVenue = siteConfig.reception.location
-  const ceremonyAddress = siteConfig.ceremony.venue
-  const receptionAddress = siteConfig.reception.venue
 
   const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
   const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
@@ -276,7 +245,6 @@ export function Footer() {
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   <DetailRow label="Wedding Date" value={ceremonyDate} />
-                  <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} />
                 </div>
               </div>
 
@@ -287,17 +255,27 @@ export function Footer() {
                 >
                   A Note From Us
                 </p>
-                <blockquote
-                  className={`font-goudy-italic ${ct.bodyLg} min-h-[4.5rem] sm:min-h-[5rem]`}
-                  style={{ color: palette.body }}
-                >
-                  &ldquo;{displayedText}
-                  <span
-                    className="ml-1 inline-block h-4 w-0.5 animate-pulse align-middle sm:h-5"
-                    style={{ backgroundColor: "var(--color-welcome-green)" }}
-                  />
-                  &rdquo;
-                </blockquote>
+                <div className="relative">
+                  {/* Reserve space for the longest quote so typing never shifts layout */}
+                  <p
+                    className={`font-goudy-italic ${ct.bodyLg} invisible select-none pointer-events-none`}
+                    aria-hidden
+                  >
+                    &ldquo;{LONGEST_FOOTER_QUOTE}&rdquo;
+                  </p>
+                  <blockquote
+                    className={`font-goudy-italic ${ct.bodyLg} absolute inset-0`}
+                    style={{ color: palette.body }}
+                    aria-live="polite"
+                  >
+                    &ldquo;{displayedText}
+                    <span
+                      className="ml-1 inline-block h-4 w-0.5 animate-pulse align-middle sm:h-5"
+                      style={{ backgroundColor: "var(--color-welcome-green)" }}
+                    />
+                    &rdquo;
+                  </blockquote>
+                </div>
                 <div className="flex items-center gap-1.5 mt-3 sm:mt-4">
                   {FOOTER_QUOTES.map((_, i) => (
                     <div
@@ -313,7 +291,7 @@ export function Footer() {
               </FooterCard>
             </motion.div>
 
-            {/* Event details — ceremony and reception always separate */}
+            {/* Event details */}
             <motion.div className="space-y-4 sm:space-y-5 min-w-0" variants={fadeInUp}>
               <FooterCard>
                 <h4
@@ -323,29 +301,9 @@ export function Footer() {
                   Ceremony & Reception
                 </h4>
                 <div className="space-y-3">
-                  <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} />
-                  {ceremonyAddress && ceremonyAddress !== ceremonyVenue && (
-                    <DetailRow label="Address" value={toTitleCase(ceremonyAddress)} />
-                  )}
                   <DetailRow label="Time" value={ceremonyTime} />
                 </div>
               </FooterCard>
-
-              {/* <FooterCard>
-                <h4
-                  className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
-                  style={{ color: palette.heading }}
-                >
-                  Reception
-                </h4>
-                <div className="space-y-3">
-                  <DetailRow label="Venue" value={toTitleCase(receptionVenue)} />
-                  {receptionAddress && receptionAddress !== receptionVenue && (
-                    <DetailRow label="Address" value={toTitleCase(receptionAddress)} />
-                  )}
-                  <DetailRow label="Time" value={receptionTime} />
-                </div>
-              </FooterCard> */}
 
               <FooterCard>
                 <h4 className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`} style={{ color: palette.heading }}>
