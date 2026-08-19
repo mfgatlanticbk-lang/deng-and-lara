@@ -96,9 +96,9 @@ function GalleryTitle() {
             "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
         }}
       >
-        our favorite moments
+        from 25 years ago
       </span>
-      <span className="sr-only">our favorite moments</span>
+      <span className="sr-only">from 25 years ago</span>
     </h1>
   )
 }
@@ -134,13 +134,31 @@ export default async function GalleryPage() {
           <div className="my-4 sm:my-5 md:my-6">
             <GalleryTitle />
           </div>
-          <p
-            className="font-goudy-italic mx-auto max-w-2xl px-2 text-[0.75rem] leading-[1.62] sm:text-[0.8125rem] sm:leading-[1.65] md:text-[0.84375rem]"
-            style={{ color: "var(--color-welcome-text)" }}
-          >
-            From our first chapter to this beautiful season of commitment — every moment has been a
-            testament to love, faith, and grace.
-          </p>
+          <div className="mx-auto max-w-2xl space-y-3 px-2 sm:space-y-3.5">
+            <p
+              className="font-goudy-italic text-[0.75rem] leading-[1.62] sm:text-[0.8125rem] sm:leading-[1.65] md:text-[0.84375rem]"
+              style={{ color: "var(--color-welcome-text)" }}
+            >
+              Looking back at our wedding day 25 years ago today, through every season, we are so
+              grateful for this beautiful life together, made even richer by the endless love and
+              support of our family, friends, and community.
+            </p>
+            <p
+              className={`${cinzel.className} font-semibold uppercase tracking-[0.26em] sm:tracking-[0.30em]`}
+              style={{
+                fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
+                color: "var(--color-welcome-green)",
+              }}
+            >
+              ALL IS GRACE.
+            </p>
+            <p
+              className="font-goudy-italic text-[0.75rem] leading-[1.62] sm:text-[0.8125rem] sm:leading-[1.65] md:text-[0.84375rem]"
+              style={{ color: "var(--color-welcome-text)" }}
+            >
+              God blessed us and sustains us.
+            </p>
+          </div>
 
           <div className="flex items-center justify-center gap-2 pt-3 sm:pt-4">
             <span

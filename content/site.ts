@@ -149,7 +149,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
     title: "A Playlist from our hearts",
     subtitle:
       "Come celebrate our 25-year journey through the music we love!\n\nClick the link to listen on Spotify, remember to shuffle, and tell us what tracks bring back your own favorite memories.",
-    playlistName: "Lara & Lara Wedding",
+    playlistName: "Deng & Lara Silver Wedding",
     embedUrl:
     //https://open.spotify.com/embed/playlist/6gglYejqocDQHIOhXF2PVl?utm_source=generator&si=9ee769dacd58423b
       "https://open.spotify.com/embed/playlist/6gglYejqocDQHIOhXF2PVl?utm_source=generator&theme=0&si=9ee769dacd58423b",

@@ -559,9 +559,9 @@ export function GuestList() {
                 <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: palette.heading }}>
                   RSVP Deadline: {siteConfig.details.rsvp.deadline}
                 </p>
-                <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: palette.heading }}>
+                {/* <p className={`${cinzel.className} ${sectionType.text} font-semibold tracking-wide`} style={{ color: palette.heading }}>
                   Coordinator: {siteConfig.details.rsvp.coordinator} · {siteConfig.details.rsvp.phone}
-                </p>
+                </p> */}
               </div>
 
               {/* Divider below header */}

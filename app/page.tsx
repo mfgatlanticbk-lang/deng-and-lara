@@ -94,7 +94,7 @@ export default function Home() {
                {/* <CoupleVideo />  */}
               {/* <LoveStory /> */}
               <Countdown />
-              {/* <Gallery /> */}
+              <Gallery />
               <VideoMessage />
               <Messages />
               {/* <OurCelebration /> */}
@@ -105,11 +105,9 @@ export default function Home() {
               {/* <Entourage /> */}
               <GuestList />
               {/* <BookOfGuests /> */}
-      
               {/* <PrincipalSponsors /> */}
               <WeddingPlaylist />
               {/* <FAQ /> */}
-              
               {/* <Registry /> */}
               {/* <SnapShare /> */}
 

@@ -9,8 +9,8 @@ import { ClientLayout } from "@/components/client-layout"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://deng-and-lara.weddinginvitationrsvp.com/"
 const canonicalUrl = siteUrl.replace(/\/$/, "")
-  const desktopHero = "/Details/linkPreviewnew.png"
-const mobileHero = "/Details/linkPreviewnew.png"
+  const desktopHero = "/Details/LinkPreview-new.jpg"
+const mobileHero = "/Details/LinkPreview-new.jpg"
 const eventImageUrl = `${canonicalUrl}${desktopHero}`
 
 // Hardcoded Cloudinary URL — image is already uploaded and always accessible via CDN.

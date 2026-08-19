@@ -99,18 +99,37 @@ function GalleryTitle() {
             "0 1px 0 color-mix(in srgb, var(--color-welcome-bg) 95%, white), 0 0 10px color-mix(in srgb, var(--color-welcome-bg) 65%, white)",
         }}
       >
-        our favorite moments
+        from 25 years ago
       </span>
-      <span className="sr-only">our favorite moments</span>
+      <span className="sr-only">from 25 years ago</span>
     </h2>
   )
 }
 
 const galleryItems = [
-  { image: "/mobile-background/image.png", text: " " },
-  { image: "/mobile-background/image.png", text: " " },
-  { image: "/mobile-background/image.png", text: " " },
-  { image: "/mobile-background/image.png", text: " " },
+  { image: "/mobile-background/couple (1).png", text: " " },
+  { image: "/mobile-background/couple (4).jpg", text: " " },
+  { image: "/mobile-background/couple (2).jpg", text: " " },
+  { image: "/mobile-background/couple (3).jpg", text: " " },
+  { image: "/mobile-background/couple (1).jpg", text: " " },
+ 
+  { image: "/mobile-background/couple (10).jpg", text: " " },
+  { image: "/mobile-background/couple (11).jpg", text: " " },
+  { image: "/mobile-background/couple (12).jpg", text: " " },
+  { image: "/mobile-background/couple (13).jpg", text: " " },
+  { image: "/mobile-background/couple (14).jpg", text: " " },
+  { image: "/mobile-background/couple (15).jpg", text: " " },
+  { image: "/mobile-background/couple (16).jpg", text: " " },
+  { image: "/mobile-background/couple (17).jpg", text: " " },
+  { image: "/mobile-background/couple (18).jpg", text: " " },
+  { image: "/mobile-background/couple (19).jpg", text: " " },
+  { image: "/mobile-background/couple (20).jpg", text: " " },
+  { image: "/mobile-background/couple (21).jpg", text: " " },
+  { image: "/mobile-background/couple (5).jpg", text: " " },
+  { image: "/mobile-background/couple (6).jpg", text: " " },
+  { image: "/mobile-background/couple (7).jpg", text: " " },
+  { image: "/mobile-background/couple (8).jpg", text: " " },
+  { image: "/mobile-background/couple (9).jpg", text: " " },
 ]
 
 export function Gallery() {
@@ -208,13 +227,31 @@ export function Gallery() {
         <div className="my-4 sm:my-5 md:my-6">
           <GalleryTitle />
         </div>
-        <p
-          className={`font-goudy-italic mx-auto max-w-2xl px-2 ${sectionType.textRelaxed}`}
-          style={{ color: "var(--color-welcome-text)" }}
-        >
-          From our first chapter to this beautiful season of commitment — every moment has been a
-          testament to love, faith, and grace.
-        </p>
+        <div className="mx-auto max-w-2xl space-y-3 px-2 sm:space-y-3.5">
+          <p
+            className={`font-goudy-italic ${sectionType.textRelaxed}`}
+            style={{ color: "var(--color-welcome-text)" }}
+          >
+            Looking back at our wedding day 25 years ago today, through every season, we are so
+            grateful for this beautiful life together, made even richer by the endless love and
+            support of our family, friends, and community.
+          </p>
+          <p
+            className={`${cinzel.className} font-semibold uppercase tracking-[0.26em] sm:tracking-[0.30em]`}
+            style={{
+              fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
+              color: "var(--color-welcome-green)",
+            }}
+          >
+            ALL IS GRACE.
+          </p>
+          <p
+            className={`font-goudy-italic ${sectionType.textRelaxed}`}
+            style={{ color: "var(--color-welcome-text)" }}
+          >
+            God blessed us and sustains us.
+          </p>
+        </div>
 
         <div className="flex items-center justify-center gap-2 pt-3 sm:pt-4">
           <span
@@ -365,7 +402,7 @@ export function Gallery() {
               ))}
             </div>
 
-            <div className="mt-10 sm:mt-12 md:mt-14 flex justify-center">
+            {/* <div className="mt-10 sm:mt-12 md:mt-14 flex justify-center">
               <Link
                 href="/gallery"
                 className={`${cinzel.className} inline-flex items-center justify-center rounded-full border px-8 py-3 text-[0.625rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.02] sm:text-[0.6875rem] sm:tracking-[0.22em]`}
@@ -388,7 +425,7 @@ export function Gallery() {
               >
                 View Full Gallery
               </Link>
-            </div>
+            </div> */}
           </>
         )}
       </div>
