@@ -107,7 +107,7 @@ export default function Home() {
               {/* <BookOfGuests /> */}
       
               {/* <PrincipalSponsors /> */}
-              {/* <WeddingPlaylist /> */}
+              <WeddingPlaylist />
               {/* <FAQ /> */}
               
               {/* <Registry /> */}

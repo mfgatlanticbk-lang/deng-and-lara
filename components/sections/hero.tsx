@@ -274,7 +274,7 @@ export function Hero({ visible = true }: HeroProps) {
                 color: "var(--color-welcome-text)",
               }}
             >
-              Join us for an evening of love, laughter, and memories.
+              Join us for an afternoon to evening of love, laughter, and memories.
             </p>
           </div>
 

@@ -279,12 +279,14 @@ export function WeddingPlaylist() {
 
               <PlaylistTitle title={title} script={playlistName} />
 
-              <p
-                className={`font-goudy-italic mx-auto mt-5 max-w-lg px-2 sm:mt-6 ${sectionType.textRelaxed}`}
+              <div
+                className={`font-goudy-italic mx-auto mt-5 max-w-lg space-y-3 px-2 sm:mt-6 ${sectionType.textRelaxed}`}
                 style={{ color: palette.body }}
               >
-                {subtitle}
-              </p>
+                {subtitle.split("\n\n").map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
 
               <div className="mt-4 flex items-center justify-center sm:mt-5">
                 <span className="h-px w-16 sm:w-24 md:w-32" style={dividerLineStyle} />

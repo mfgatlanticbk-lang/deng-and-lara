@@ -26,7 +26,7 @@ export const siteConfig = {
   },
   wedding: {
     date: "December 13, 2026",
-    time: "1:00 PM",
+    time: "3:00 PM",
     venue: "To Be Announced",
     tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
@@ -50,7 +50,7 @@ export const siteConfig = {
   },
   details: {
     rsvp: {
-      deadline: "December 13, 2026",
+      deadline: "September 12, 2026",
       coordinator: "To Be Announced",
       phone: "To Be Announced",
     },
@@ -84,7 +84,7 @@ export const siteConfig = {
     map: "https://maps.app.goo.gl/6Uo3aPZHLPf4DmNAA",
     date: "December 13, 2026",
     day: "Thursday",
-    time: "1:00 PM",
+    time: "3:00 PM",
     entourageTime: "12:00 PM",
     guestsTime: "12:30 PM",
     image: ["/Details/ceremony.webp", "/Details/ceremony2.webp", "/Details/ceremony3.webp"],
@@ -147,23 +147,24 @@ Now, as they prepare to say yes before God and the people they love most, Cather
   },
   playlist: {
     title: "A Playlist from our hearts",
-    subtitle: "Songs that have been part of our journey together",
+    subtitle:
+      "Come celebrate our 25-year journey through the music we love!\n\nClick the link to listen on Spotify, remember to shuffle, and tell us what tracks bring back your own favorite memories.",
     playlistName: "Lara & Lara Wedding",
     embedUrl:
-    //https://open.spotify.com/embed/playlist/1fpzT23f6G5bu6QBcI1tO8?utm_source=generator&si=c509d78be8954066
-      "https://open.spotify.com/embed/playlist/1fpzT23f6G5bu6QBcI1tO8?utm_source=generator&theme=0&si=c509d78be8954066",
-    spotifyUrl: "https://open.spotify.com/playlist/1fpzT23f6G5bu6QBcI1tO8",
+    //https://open.spotify.com/embed/playlist/6gglYejqocDQHIOhXF2PVl?utm_source=generator&si=9ee769dacd58423b
+      "https://open.spotify.com/embed/playlist/6gglYejqocDQHIOhXF2PVl?utm_source=generator&theme=0&si=9ee769dacd58423b",
+    spotifyUrl: "https://open.spotify.com/playlist/6gglYejqocDQHIOhXF2PVl",
   },
   snapShare: {
     googleDriveLink:
       "https://drive.google.com/drive/folders/1mILJhQdmYJ0_9hsipZoGYft9nu22M0oH?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
-    hashtag: ["#TheLarasSilverCelebration",],
+    hashtag: ["#DLarasSilverCelebration",],
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
   },
   accommodation: {
     coordinator: {
-      name: "Gayle Kathleen Asoy Gable",
+      name: "",
       phone: "0909 912 3844",
     },
     hotels: [

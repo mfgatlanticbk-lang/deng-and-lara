@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { motion } from "motion/react"
 import { Cinzel } from "next/font/google"
 import { Skeleton } from "@/components/ui/skeleton"
-import { SectionCornerDecorations } from "@/components/section-corner-decorations"
 import { sectionType } from "@/lib/section-typography"
 
 const cinzel = Cinzel({
@@ -53,7 +52,6 @@ function MessageCardShell({
       className={`relative min-w-0 overflow-visible rounded-lg border px-4 py-4 sm:rounded-xl sm:px-5 sm:py-5 md:rounded-2xl md:px-6 md:py-6 ${className}`}
       style={{ ...messageCardStyle, ...style }}
     >
-      <SectionCornerDecorations size="card" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-4 top-0 h-px sm:inset-x-5"

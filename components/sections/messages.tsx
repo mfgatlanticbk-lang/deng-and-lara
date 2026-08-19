@@ -448,7 +448,6 @@ export function Messages() {
           className="relative min-w-0 overflow-visible rounded-lg border px-4 py-5 text-center sm:rounded-xl sm:px-7 sm:py-6 md:rounded-2xl md:px-8"
           style={cardContainerStyle}
         >
-          <SectionCornerDecorations size="card" />
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-5 top-0 h-px sm:inset-x-8"
